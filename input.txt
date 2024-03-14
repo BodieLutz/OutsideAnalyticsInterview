@@ -1,0 +1,1 @@
+elevator start=12 floor=2,9,1,32
