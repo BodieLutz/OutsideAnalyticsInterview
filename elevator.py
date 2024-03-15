@@ -1,5 +1,5 @@
 import networkx as nx
-
+cost = 10
 
 def parse_input():
     input_file = open("input.txt", "rt")# open input text file for reading
@@ -25,6 +25,32 @@ def parse_input():
 
     return start, floors
 
-parse_input()
+def create_graph(start, floors):
+    #Create graph
+    G = nx.Graph()
+
+    #Create all nodes
+    floors.insert(0, int(start)) #consolidate list of all floors
+    G.add_nodes_from(floors) #add nodes to graph
+    print(G.nodes)
+
+    #Create weighted edges
+    for x in floors:
+        for y in floors:
+            #Do not add self edges
+            if(x == y):
+                continue
+            elif(G.has_edge(x,y) == True):
+                continue
+            else:
+                weight = abs(x-y) * cost#calculate cost
+                G.add_edge(x,y, weight=weight)
+
+    return G
 
 
+def main():
+    start, floors = parse_input()
+    Graph = create_graph(start, floors)
+
+main()
