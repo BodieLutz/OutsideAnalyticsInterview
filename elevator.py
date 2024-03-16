@@ -25,6 +25,7 @@ def parse_input():
 
     return start, floors
 
+#Create the weighted, undirected graph
 def create_graph(start, floors):
     #Create graph
     G = nx.Graph()
@@ -32,7 +33,6 @@ def create_graph(start, floors):
     #Create all nodes
     floors.insert(0, int(start)) #consolidate list of all floors
     G.add_nodes_from(floors) #add nodes to graph
-    print(G.nodes)
 
     #Create weighted edges
     for x in floors:
@@ -40,17 +40,50 @@ def create_graph(start, floors):
             #Do not add self edges
             if(x == y):
                 continue
+            #do not repeat edges
             elif(G.has_edge(x,y) == True):
                 continue
             else:
-                weight = abs(x-y) * cost#calculate cost
-                G.add_edge(x,y, weight=weight)
+                weight = abs(x-y) * cost #calculate cost
+                G.add_edge(x,y, weight=weight) #add weighted edge with cost as edge weight
 
     return G
 
+#Compute the travel cost of a given list of edges
+def compute_cost(list):
+    total_cost = 0
+    for item in list:
+        total_cost += abs(item[0]- item[1]) * cost
+
+    return total_cost
+
+#Find the shortest path for the elevator
+def find_path(Graph, start):
+    mst = nx.minimum_spanning_tree(Graph, weight="weight") #calculate the minimum spanning tree of the graph (Kruskal's)
+
+    test2 = list(nx.dfs_edges(mst, source=start)) #Use DFS to search through the MST
+
+    #Process DFS list to ensure continuity
+    for i in range(len(test2)):
+        if(i == 0):
+            continue
+        else:
+            prev_item = test2[i-1]
+
+        if(test2[i][0] == start):
+            source = prev_item[1]
+            target = test2[i][1]
+            test2.pop(i)
+            new_tuple = (source, target)
+            test2.append(new_tuple)
+
+    test2_cost = compute_cost(test2) #compute the total cost of the path
+    return test2, test2_cost
 
 def main():
     start, floors = parse_input()
     Graph = create_graph(start, floors)
+    path, cost = find_path(Graph, start)
+    print(path, cost)
 
 main()
