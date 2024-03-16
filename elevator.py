@@ -2,7 +2,7 @@ import networkx as nx
 cost = 10
 
 def parse_input():
-    input_file = open("input.txt", "rt")# open input text file for reading
+    input_file = open("input2.txt", "rt")# open input text file for reading
 
     input = input_file.readlines()  # read input in as string
     input = ''.join(input) #convert read list to string
@@ -61,29 +61,30 @@ def compute_cost(list):
 def find_path(Graph, start):
     mst = nx.minimum_spanning_tree(Graph, weight="weight") #calculate the minimum spanning tree of the graph (Kruskal's)
 
-    test2 = list(nx.dfs_edges(mst, source=start)) #Use DFS to search through the MST
+    dfs_path = list(nx.dfs_edges(mst, source=start)) #Use DFS to search through the MST
 
     #Process DFS list to ensure continuity
-    for i in range(len(test2)):
+    for i in range(len(dfs_path)):
         if(i == 0):
             continue
         else:
-            prev_item = test2[i-1]
+            prev_item = dfs_path[i-1]
 
-        if(test2[i][0] == start):
+        #When DFS returns to top of MST
+        if(dfs_path[i][0] == start):
             source = prev_item[1]
-            target = test2[i][1]
-            test2.pop(i)
+            target = dfs_path[i][1]
+            dfs_path.pop(i) #remove discontinuity
             new_tuple = (source, target)
-            test2.append(new_tuple)
+            dfs_path.insert(i, new_tuple) #insert new, continuous path
 
-    test2_cost = compute_cost(test2) #compute the total cost of the path
-    return test2, test2_cost
+    dfs_cost = compute_cost(dfs_path) #compute the total cost of the path
+    return dfs_path, dfs_cost
 
 def main():
-    start, floors = parse_input()
-    Graph = create_graph(start, floors)
-    path, cost = find_path(Graph, start)
+    start, floors = parse_input() #parse the input
+    Graph = create_graph(start, floors) #Generate the graph
+    path, cost = find_path(Graph, start) #find the shortest path
     print(path, cost)
 
 main()
