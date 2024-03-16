@@ -1,5 +1,5 @@
 import networkx as nx
-cost = 10
+travel_time = 10
 
 def parse_input():
     input_file = open("input2.txt", "rt")# open input text file for reading
@@ -44,7 +44,7 @@ def create_graph(start, floors):
             elif(G.has_edge(x,y) == True):
                 continue
             else:
-                weight = abs(x-y) * cost #calculate cost
+                weight = abs(x-y) * travel_time #calculate cost
                 G.add_edge(x,y, weight=weight) #add weighted edge with cost as edge weight
 
     return G
@@ -53,7 +53,7 @@ def create_graph(start, floors):
 def compute_cost(list):
     total_cost = 0
     for item in list:
-        total_cost += abs(item[0]- item[1]) * cost
+        total_cost += abs(item[0]- item[1]) * travel_time
 
     return total_cost
 
@@ -81,10 +81,20 @@ def find_path(Graph, start):
     dfs_cost = compute_cost(dfs_path) #compute the total cost of the path
     return dfs_path, dfs_cost
 
+#generate the proper output given a path
+def create_output(path, start):
+    final_path = []
+    final_path.append(start)
+    for edge in path:
+        final_path.append(edge[1])
+    final_path = ','.join(str(x) for x in final_path)
+    return final_path
+
 def main():
     start, floors = parse_input() #parse the input
     Graph = create_graph(start, floors) #Generate the graph
     path, cost = find_path(Graph, start) #find the shortest path
-    print(path, cost)
+    output = create_output(path, start) #Create output in proper format
+    print(cost, output)
 
 main()
