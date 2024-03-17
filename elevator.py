@@ -4,11 +4,12 @@ travel_time = 10
 
 def parse_input():
 
-    if("elevator" in sys.argv[1]):
+    if("elevator" in sys.argv[1] and len(sys.argv) == 4):
+        #assign the from arguments
         start = sys.argv[2]
         floors = sys.argv[3]
 
-    elif('txt' in sys.argv[1]):
+    elif('txt' in sys.argv[1] and len(sys.argv) == 2):
         filename = sys.argv[1]
         input_file = open(filename, "rt")# open input text file for reading
 
@@ -23,9 +24,8 @@ def parse_input():
         floors = input[1]
     else:
         print("ERROR: ARGUMENTS NOT RECOGNIZED")
+        exit()
 
-    print('start:', start)
-    print("floors:", floors)
     # parse the starting floor to only the floor number
     start = start.split("=")[1:]
     start = int(start[0])
@@ -110,5 +110,5 @@ def main():
     print(cost, output)
 
 #Setting arguments for testing
-#sys.argv = ["elevator.py", "elevator", "start=12", "floors=1,2,9,32,44"]
+#sys.argv = ["elevator.py", "elevator", "start=12", "floors=2,9,1,32"]
 main()
