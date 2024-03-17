@@ -6,7 +6,7 @@ to get to each and every floor. The script assumes that the input will follow th
 program will be in the form of "[total travel time] [path of elevator]" where [total travel time] is an integer and
 [path of elevator] is a comma delimited list of floors. This will print to stdout.
 
-###EXAMPLE COMMAND LINE EXECUTION:
+### EXAMPLE COMMAND LINE EXECUTION:
 
 **Using input file:**
     `python elevator.py input.txt`
@@ -26,7 +26,7 @@ travel time is 10 x 10 = 100.
 
 This program was built in Python3 using the NetworkX library.
 
-Assumptions:
+**Assumptions:**
  - The execution of this script represents the use of a single elevator, and that elevator must visit all floors
  - The goal of the elevator is to minimize the cost to visit all floors
  - There are no extra calls to the elevator other than the list of floors inputted
@@ -36,7 +36,8 @@ Assumptions:
  - After the elevator visits the last floor, it will remain where it is
  - The elevator will only visit a floor one time
 
-Features Not Implemented:
+**Features Not Implemented:**
  - Additional elevator calls during the execution of the input path
  - Output elsewhere from stdout
 
+#### Thank you for your interest!
