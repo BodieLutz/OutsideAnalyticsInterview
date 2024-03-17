@@ -1,19 +1,31 @@
 import networkx as nx
+import sys
 travel_time = 10
 
 def parse_input():
-    input_file = open("input2.txt", "rt")# open input text file for reading
 
-    input = input_file.readlines()  # read input in as string
-    input = ''.join(input) #convert read list to string
-    input_file.close()  # close the file
-    input = input.split(" ")  # split the input string on spaces
-    input = input[1:]  # remove 'elevator' from list
+    if("elevator" in sys.argv[1]):
+        start = sys.argv[2]
+        floors = sys.argv[3]
 
-    # split the input list into the start floor and the target floors
-    start = input[0]
-    floors = input[1]
+    elif('txt' in sys.argv[1]):
+        filename = sys.argv[1]
+        input_file = open(filename, "rt")# open input text file for reading
 
+        input = input_file.readlines()  # read input in as string
+        input = ''.join(input) #convert read list to string
+        input_file.close()  # close the file
+        input = input.split(" ")  # split the input string on spaces
+        input = input[1:]  # remove 'elevator' from list
+
+        # split the input list into the start floor and the target floors
+        start = input[0]
+        floors = input[1]
+    else:
+        print("ERROR: ARGUMENTS NOT RECOGNIZED")
+
+    print('start:', start)
+    print("floors:", floors)
     # parse the starting floor to only the floor number
     start = start.split("=")[1:]
     start = int(start[0])
@@ -21,7 +33,7 @@ def parse_input():
     # parse target floors to list of integers
     floors = floors.split("=")[1:]
     floors = "".join(floors).split(",")
-    floors = [eval(i) for i in floors]
+    floors = [eval(i) for i in floors] #convert floor numbers to integers
 
     return start, floors
 
@@ -97,4 +109,6 @@ def main():
     output = create_output(path, start) #Create output in proper format
     print(cost, output)
 
+#Setting arguments for testing
+#sys.argv = ["elevator.py", "elevator", "start=12", "floors=1,2,9,32,44"]
 main()
