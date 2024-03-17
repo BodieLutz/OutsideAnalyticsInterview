@@ -6,13 +6,13 @@ to get to each and every floor. The script assumes that the input will follow th
 program will be in the form of "[total travel time] [path of elevator]" where [total travel time] is an integer and
 [path of elevator] is a comma delimited list of floors. This will print to stdout.
 
-EXAMPLE COMMAND LINE EXECUTION:
+###EXAMPLE COMMAND LINE EXECUTION:
 
-Using input file:
-    python elevator.py input.txt
+**Using input file:**
+    `python elevator.py input.txt`
 
-Using arguments:
-    python elevator.py elevator start=12 floors=2,9,1,32
+**Using arguments:**
+    `python elevator.py elevator start=12 floors=2,9,1,32`
 
 
 The methodology of this script is to create a fully-connected, undirected, weighted graph wherein each node represents a
